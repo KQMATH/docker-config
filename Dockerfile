@@ -16,10 +16,12 @@ COPY moodle-config.php /var/www/html/config.php
 ENV DEBIAN_FRONTEND noninteractive
 
 # Database info
+#Change to your ip
 ENV MYSQL_HOST 158.38.101.116
 ENV MYSQL_USER moodle
 ENV MYSQL_PASSWORD moodle
 ENV MYSQL_DB moodle
+#Change to your ip
 ENV MOODLE_URL http://158.38.101.116
 
 ADD ./foreground.sh /etc/apache2/foreground.sh
@@ -29,6 +31,7 @@ RUN apt-get update && \
 		php-gd libapache2-mod-php postfix wget supervisor php-pgsql curl libcurl3 \
 		libcurl3-dev php-curl php-xmlrpc php-intl php-mysql git-core php-xml php-mbstring php-zip php-soap && \
 	cd /tmp && \
+	#change if you want another version of moodle
 	git clone -b MOODLE_32_STABLE git://git.moodle.org/moodle.git --depth=1 && \
 	mv /tmp/moodle/* /var/www/html/ && \
 	rm /var/www/html/index.html && \
