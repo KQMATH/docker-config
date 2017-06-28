@@ -17,12 +17,12 @@ ENV DEBIAN_FRONTEND noninteractive
 
 # Database info
 #Change to your ip
-ENV MYSQL_HOST 158.38.101.116
+ENV MYSQL_HOST localhost
 ENV MYSQL_USER moodle
 ENV MYSQL_PASSWORD moodle
 ENV MYSQL_DB moodle
 #Change to your ip
-ENV MOODLE_URL http://158.38.101.116
+ENV MOODLE_URL http://localhost:8080
 
 ADD ./foreground.sh /etc/apache2/foreground.sh
 
