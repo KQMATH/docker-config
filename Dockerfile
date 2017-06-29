@@ -1,5 +1,7 @@
-# Dockerfile for moodle instance. more dockerish version of https://github.com/sergiogomez/docker-moodle
+# Dockerfile for moodle instance. 
+# Forked from Jonathan Hardison's docker version. 
 # Forked from Jon Auer's docker version. https://github.com/jda/docker-moodle
+
 FROM ubuntu:16.04
 MAINTAINER Jonathan Hardison <jmh@jonathanhardison.com>
 #Original Maintainer Jon Auer <jda@coldshore.com>
@@ -7,10 +9,6 @@ MAINTAINER Jonathan Hardison <jmh@jonathanhardison.com>
 VOLUME ["/var/moodledata"]
 EXPOSE 80 443
 COPY moodle-config.php /var/www/html/config.php
-
-# Keep upstart from complaining
-# RUN dpkg-divert --local --rename --add /sbin/initctl
-# RUN ln -sf /bin/true /sbin/initctl
 
 # Let the container know that there is no tty
 ENV DEBIAN_FRONTEND noninteractive
@@ -22,34 +20,35 @@ ENV MYSQL_USER moodle
 ENV MYSQL_PASSWORD moodle
 ENV MYSQL_DB moodle
 #Change to your ip
-ENV MOODLE_URL http://localhost:8080
+ENV MOODLE_URL http://localhost:8088
 
 ADD ./foreground.sh /etc/apache2/foreground.sh
 
 RUN apt-get update && \
-	apt-get -y install mysql-client pwgen python-setuptools curl git unzip apache2 php \
-		php-gd libapache2-mod-php postfix wget supervisor php-pgsql curl libcurl3 \
-		libcurl3-dev php-curl php-xmlrpc php-intl php-mysql git-core php-xml php-mbstring php-zip php-soap && \
-	cd /tmp && \
-	#change if you want another version of moodle
-	git clone -b MOODLE_32_STABLE git://git.moodle.org/moodle.git --depth=1 && \
-	mv /tmp/moodle/* /var/www/html/ && \
-	rm /var/www/html/index.html && \
-	chown -R www-data:www-data /var/www/html && \
-	chmod +x /etc/apache2/foreground.sh
+        apt-get -y install \
+            mysql-client pwgen python-setuptools curl git unzip apache2 php \
+            php-gd libapache2-mod-php postfix wget supervisor php-pgsql curl \
+	    libcurl3 libcurl3-dev php-curl php-xmlrpc php-intl php-mysql \
+	    git-core php-xml php-mbstring php-zip php-soap && \
+        cd /tmp && \
+        #change if you want another version of moodle
+        git clone -b MOODLE_32_STABLE git://git.moodle.org/moodle.git \
+	    --depth=1 && \
+        mv /tmp/moodle/* /var/www/html/ && \
+        rm /var/www/html/index.html && \
+        chown -R www-data:www-data /var/www/html && \
+        chmod +x /etc/apache2/foreground.sh
 
 # Enable SSL, moodle requires it
-RUN a2enmod ssl && a2ensite default-ssl # if using proxy, don't need actually secure connection
+RUN a2enmod ssl && \
+    a2ensite default-ssl 
+# if using proxy, don't need actually secure connection
 
 # Cleanup
-RUN apt-get clean autoclean && apt-get autoremove -y && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* /var/lib/dpkg/* /var/lib/cache/* /var/lib/log/*
+RUN apt-get clean autoclean && \
+    apt-get autoremove -y && \
+    rm -rf /var/lib/apt/lists/* && \
+    rm -rf /tmp/* /var/tmp/* /var/lib/dpkg/* /var/lib/cache/* /var/lib/log/*
 
 CMD ["/etc/apache2/foreground.sh"]
 
-#RUN easy_install supervisor
-#ADD ./start.sh /start.sh
-#
-#ADD ./supervisord.conf /etc/supervisord.conf
-# RUN chmod 755 /start.sh /etc/apache2/foreground.sh
-# EXPOSE 22 80
-# CMD ["/bin/bash", "/start.sh"]
