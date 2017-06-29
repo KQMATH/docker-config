@@ -14,14 +14,16 @@ ADD ./foreground.sh /etc/apache2/foreground.sh
 # Let the container know that there is no tty
 ENV DEBIAN_FRONTEND noninteractive
 
-# Database info
-#Change to your ip
+# The setup is assuming development on localhost.
+# For deployment, you need to change localhost to the IP you use.
+# This can be done here, or on the command line starting the container.
 ENV MYSQL_HOST localhost
+ENV MOODLE_URL http://localhost:8088
+
+# Database info
 ENV MYSQL_USER moodle
 ENV MYSQL_PASSWORD moodle
 ENV MYSQL_DB moodle
-#Change to your ip
-ENV MOODLE_URL http://localhost:8088
 
 RUN apt-get update && \
         apt-get -y install \
