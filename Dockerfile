@@ -1,14 +1,15 @@
 # Dockerfile for moodle instance. 
-# Forked from Jonathan Hardison's docker version. 
-# Forked from Jon Auer's docker version. https://github.com/jda/docker-moodle
+# Copied from Jonathan Hardison's docker version. 
+#     https://github.com/jmhardison/docker-moodle
 
 FROM ubuntu:16.04
-MAINTAINER Jonathan Hardison <jmh@jonathanhardison.com>
-#Original Maintainer Jon Auer <jda@coldshore.com>
+MAINTAINER KQMATH project, Hans Georg Schaathun <georg+github@schaathun.net>
 
 VOLUME ["/var/moodledata"]
 EXPOSE 80 443
+
 COPY moodle-config.php /var/www/html/config.php
+ADD ./foreground.sh /etc/apache2/foreground.sh
 
 # Let the container know that there is no tty
 ENV DEBIAN_FRONTEND noninteractive
@@ -21,8 +22,6 @@ ENV MYSQL_PASSWORD moodle
 ENV MYSQL_DB moodle
 #Change to your ip
 ENV MOODLE_URL http://localhost:8088
-
-ADD ./foreground.sh /etc/apache2/foreground.sh
 
 RUN apt-get update && \
         apt-get -y install \
