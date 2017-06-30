@@ -22,12 +22,12 @@ To spawn a new instance of Moodle:
 
 ```
 cd ..
-git clone git://git.moodle.org/moodle.git
+git clone -b KQM_32 git@github.com:KQMATH/moodle.git
 cd docker-moodle
 ./run.sh
 ```
 
-Obviously, you can check out a particular version of moodle if you prefer.
+Obviously, you can check out a different version of moodle if you prefer.
 Plugins can be added to the moodle directory as necessary.
 
 You can visit the following URL in a browser to get started:
