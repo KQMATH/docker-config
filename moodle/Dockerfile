@@ -8,7 +8,7 @@ MAINTAINER KQMATH project, Hans Georg Schaathun <georg+github@schaathun.net>
 VOLUME ["/var/moodledata"]
 EXPOSE 80 443
 
-ADD ./foreground.sh /etc/apache2/foreground.sh
+ADD ./install.sh /etc/install.sh
 
 # The setup is assuming development on localhost.
 # For deployment, you need to change localhost to the IP you use.
@@ -21,7 +21,9 @@ ENV MYSQL_USER moodle
 ENV MYSQL_PASSWORD moodle
 ENV MYSQL_DB moodle
 
-RUN chmod +x /etc/apache2/foreground.sh && \
+RUN apt-get update && \
+    apt-get -y install maxima gnuplot maxima-share texinfo && \
+    chmod +x /etc/install.sh && \
     rm -rf /tmp/* /var/tmp/* /var/lib/log/*
 
 CMD ["/etc/apache2/foreground.sh"]
