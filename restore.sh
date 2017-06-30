@@ -15,9 +15,9 @@ docker run --rm  \
        -v moodle-moodledata:/data \
        -v `pwd`/backup/:/backup \
        ubuntu \
-       tar cvf /backup/$T$D-moodledata.tar /data
+       tar xvf /backup/$T$D-moodledata.tar 
 docker run --rm  \
        -v moodle-db:/data \
        -v `pwd`/backup/:/backup \
        ubuntu \
-       tar cvf /backup/$T$D-moodledb.tar /data
+       tar xvf /backup/$T$D-moodledb.tar 
