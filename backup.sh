@@ -4,7 +4,7 @@ mkdir -p backup
 
 D=`date +"%y%m%d%H%M"`
 
-if test x$1 == x ;
+if test x$1 = x ;
 then
    T=""
 else
