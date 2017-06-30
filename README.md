@@ -44,15 +44,18 @@ If the DB is not ready, this will fail with absolutely no warning.
 ./run.sh
 ```
 
-
-You can visit the following URL in a browser to get started:
+Again, the install script takes a long time to run, so please wait before
+you test it, by visiting the following URL in a browser:
 
 ```
 http://localhost:8088
 ```
 
-If you are asked to accept license agreements, then the install script
-failed, probably because the DB was not ready.
+If it does not respond, 
+then the install script has not completed.  
+If you are asked to accept license agreements,
+then the install script has probably failed.
+This is likely caused by the DB not being present.
 
 ## Caveats
 The following aren't handled, considered, or need work: 
