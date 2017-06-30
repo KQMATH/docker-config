@@ -37,25 +37,33 @@ cd docker-moodle
 Obviously, you can check out a different version of moodle if you prefer.
 Plugins can be added to the moodle directory as necessary.
 
-To start the moodle container, use the following script. 
-If the DB is not ready, this will fail with absolutely no warning.
+To create the moodle DB and moodledata volume, use the install script.
+
+```
+./install.sh
+```
+
+This prints output from the moodle installation process on stdout.
+The installation process takes a while.
+The database is populated and the moodledata volume is created.
+If the DB is not ready, the installation process will fail with 
+an error message.
+
+Once the install script is complete, it is possible to run the
+moodle container.
 
 ```
 ./run.sh
 ```
 
-Again, the install script takes a long time to run, so please wait before
-you test it, by visiting the following URL in a browser:
+Now you can visit the following URL in a browser:
 
 ```
 http://localhost:8088
 ```
 
-If it does not respond, 
-then the install script has not completed.  
 If you are asked to accept license agreements,
 then the install script has probably failed.
-This is likely caused by the DB not being present.
 
 ## Caveats
 The following aren't handled, considered, or need work: 
