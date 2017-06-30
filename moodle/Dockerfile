@@ -23,6 +23,7 @@ ENV MYSQL_DB moodle
 
 RUN apt-get update && \
     apt-get -y install maxima gnuplot maxima-share texinfo && \
+    useradd test && \
     chmod +x /etc/install.sh && \
     rm -rf /tmp/* /var/tmp/* /var/lib/log/*
 
