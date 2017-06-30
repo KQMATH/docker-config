@@ -1,19 +1,19 @@
 docker-moodle
 =============
-[![](https://images.microbadger.com/badges/image/jhardison/moodle.svg)](https://microbadger.com/images/jhardison/moodle "Get your own image badge on microbadger.com")
 
-A Dockerfile that installs and runs the latest Moodle 3.2 stable, with external MySQL Database.
-
-Tags:
-* latest - 3.2 stable
-* v3.1 - 3.1 stable
+A Dockerfile to run Moodle on for development on localhost,
+with external MySQL Database.  The recommended approach is
+to put the moodle installation in a host directory and
+mount it as a module.  Named volumes are used and reused
+for moodledata and the database. Backup scripts are provided 
+to dump data.
 
 ## Installation
 
 ```
-git clone https://github.com/jmhardison/docker-moodle
+git clone https://github.com/KQMATH/docker-moodle.git
 cd docker-moodle
-docker build -t moodle .
+./make.sh
 ```
 
 ## Usage
@@ -21,14 +21,19 @@ docker build -t moodle .
 To spawn a new instance of Moodle:
 
 ```
-docker run -d --name DB -p 3306:3306 -e MYSQL_DATABASE=moodle -e MYSQL_ROOT_PASSWORD=moodle -e MYSQL_USER=moodle -e MYSQL_PASSWORD=moodle mysql
-docker run -d -P --name moodle --link DB:DB -e MOODLE_URL=http://192.168.59.103:8080 -p 8080:80 jhardison/moodle
+cd ..
+git clone git://git.moodle.org/moodle.git
+cd docker-moodle
+./run.sh
 ```
+
+Obviously, you can check out a particular version of moodle if you prefer.
+Plugins can be added to the moodle directory as necessary.
 
 You can visit the following URL in a browser to get started:
 
 ```
-http://192.168.59.103:8080 
+http://localhost:8088
 ```
 
 ## Caveats
@@ -39,6 +44,4 @@ The following aren't handled, considered, or need work:
 
 ## Credits
 
-This is a fork of [Jon Auer's](https://github.com/jda/docker-moodle) Dockerfile.
-This is a reductionist take on [sergiogomez](https://github.com/sergiogomez/)'s docker-moodle Dockerfile.
-
+This is a fork of [Jonathan Hardison's](https://github.com/jmhardison/docker-moodle) Dockerfile.
