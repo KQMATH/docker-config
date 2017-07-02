@@ -1,8 +1,6 @@
 #!/bin/bash
 
 echo "placeholder" > /var/moodledata/placeholder
-chgrp -R www-data /var/moodledata /var/www/html
-chmod g+rwX /var/moodledata /var/www/html
 
 cd /var/www/html 
 /usr/bin/php admin/cli/install_database.php \
@@ -12,3 +10,6 @@ cd /var/www/html
               --shortname="KQMATH-localhost" \
               --summary="Demo server for development on localhost" \
               --adminpass=M00dle 
+
+chgrp -R www-data /var/moodledata /var/www/html
+chmod g+rwX /var/moodledata /var/www/html

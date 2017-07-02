@@ -30,8 +30,7 @@ RUN a2enmod ssl && \
 # Cleanup
 RUN apt-get clean autoclean && \
     apt-get autoremove -y && \
-    rm -rf /var/lib/apt/lists/* && \
-    rm -rf /tmp/* /var/tmp/* /var/lib/cache/* /var/lib/log/*
+    rm -rf /tmp/* /var/tmp/* 
 
 CMD ["/etc/apache2/foreground.sh"]
 
