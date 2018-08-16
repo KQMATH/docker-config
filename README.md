@@ -1,6 +1,13 @@
 docker-moodle
 =============
 
+This fork of the repo was created for the KQMATH project, 
+but has been abandoned.  KQMATH depends on the STACK question
+type, which in turn depends on maxima, which runs in the SBCL
+lisp interpreter, which depends on system calls which docker
+does not permit. Please refer to the original versions of
+the moodle dockerfile, and ignore our fork.
+
 A Dockerfile to run Moodle on for development on localhost,
 with external MySQL Database.  The recommended approach is
 to put the moodle installation in a host directory and
